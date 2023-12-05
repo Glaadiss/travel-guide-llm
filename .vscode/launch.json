@@ -1,21 +1,16 @@
 {
     "version": "0.2.0",
-    "inputs": [
-        {
-            "id": "a",
-            "type": "promptString",
-            "description": "Enter the value for 'a'"
-        },
-        {
-            "id": "b",
-            "type": "promptString",
-            "description": "Enter the value for 'b'"
-        }
-    ],
     // "envFile": "${workspaceFolder}/.env",
     "configurations": [
         {
-
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Debug script with args",
             "type": "python",
             "request": "launch",
