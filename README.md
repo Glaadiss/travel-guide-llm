@@ -1,8 +1,12 @@
 # python-starter
 
 
-
 ## Getting started
+
+Create new repo from gist based on python-starter (private by default):
+```
+bash <(curl -s https://gist.githubusercontent.com/Glaadiss/1e97233f32fb7f2441f879e842b76beb/raw) NEW_REPO_NAME
+```
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
