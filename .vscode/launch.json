@@ -1,27 +1,14 @@
 {
     "version": "0.2.0",
-    // "envFile": "${workspaceFolder}/.env",
     "configurations": [
         {
-            "name": "Python: Current File",
-            "type": "python",
+            "name": "Python: Debug main.py",
+            "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/src/main.py",  // Adjust path to your main.py
             "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",         // Specify the path to your .env file
             "justMyCode": true
         },
-        {
-            "name": "Debug script with args",
-            "type": "python",
-            "request": "launch",
-            "module": "DebuggerTest.script_with_args",
-            "args": [
-                "${input:a}",
-                "3",
-            ],
-            "env": {
-                "MY_ENV_VAR": "my env var value"
-            }
-        }
     ]
 }
