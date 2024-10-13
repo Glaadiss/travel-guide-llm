@@ -10,5 +10,29 @@
             "envFile": "${workspaceFolder}/.env",         // Specify the path to your .env file
             "justMyCode": true
         },
+        {
+            "name": "Python: Streamlit",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "args": [
+                "run",
+                "${workspaceFolder}/src/main.py",
+                "--server.port",
+                "8501"
+            ],
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",         // Specify the path to your .env file
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Ingestion",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/ingestion.py",  // Adjust path to your main.py
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",         // Specify the path to your .env file
+            "justMyCode": true
+        },
     ]
 }
