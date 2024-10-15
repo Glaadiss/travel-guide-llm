@@ -11,6 +11,8 @@ version = "0.1.0"
 description = "A new Python project"
 authors = ["Glaadiss <bartekgladys@gmail.com>"]
 readme = "README.md"
+packages = [{include = "src"}]  # Add this line
+
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.9.7 || >3.9.7,<3.13"
@@ -26,6 +28,7 @@ pillow = "^10.4.0"
 pypdf2 = "^3.0.1"
 duckduckgo-search = "^6.3.0"
 pyowm = "^3.3.0"
+langgraph = "^0.2.35"
 
 
 [build-system]

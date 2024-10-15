@@ -1,0 +1,11 @@
+{
+    "dockerfile_lines": [],
+    "graphs": {
+      "ivy_workflow": "./src/llm_graph.py:app"
+    },
+    "env": ".env",
+    "python_version": "3.11",
+    "dependencies": [
+      "."
+    ]
+  }

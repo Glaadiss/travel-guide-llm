@@ -20,8 +20,10 @@ def view(run_llm):
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
 
-        # Call LLM function
-        result = run_llm(prompt, st.session_state.messages)
+        # Add spinner while waiting for LLM response
+        with st.spinner("Thinking..."):
+            # Call LLM function
+            result = run_llm(prompt, st.session_state.messages)
 
         # Display assistant response in chat message container
         with st.chat_message("assistant"):

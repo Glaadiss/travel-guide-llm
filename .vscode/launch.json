@@ -11,6 +11,15 @@
             "justMyCode": true
         },
         {
+            "name": "Python: Debug langgraph",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/llm_graph.py",  // Adjust path to your main.py
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",         // Specify the path to your .env file
+            "justMyCode": true
+        },
+        {
             "name": "Python: Streamlit",
             "type": "debugpy",
             "request": "launch",
