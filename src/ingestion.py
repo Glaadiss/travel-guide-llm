@@ -79,12 +79,11 @@ def ingest_docs(documents):
             split_documents.append(split)
 
     # Create vector store
-    vector_store = PineconeVectorStore.from_documents(split_documents, embeddings, index_name=INDEX_NAME)
+    PineconeVectorStore.from_documents(split_documents, embeddings, index_name=INDEX_NAME)
 
     print(f"Ingested {len(split_documents)} document chunks.")
 
 
 if __name__ == "__main__":
-    # pdf_to_images(pdf_path, "data/travel_guide_pdf2images")
     documents = extract_text_from_pdf_ocr()
     ingest_docs(documents)

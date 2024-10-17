@@ -2,8 +2,8 @@ import operator
 import os
 from typing import Annotated, Sequence, TypedDict
 
-from langchain_community.tools import DuckDuckGoSearchRun
-from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
+from langchain_community.tools import TavilySearchResults
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_core.tools import Tool
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
@@ -37,11 +37,14 @@ retriever_tool = Tool(
     description="Useful for answering questions about travel in Vietnam. Returns content and metadata.",
 )
 
-search_tool = Tool(
-    name="Search",
-    func=DuckDuckGoSearchRun().run,
-    description="Useful for searching the internet for current information.",
+
+search_tool = TavilySearchResults(
+    max_results=5,
+    search_depth="advanced",
+    include_answer=True,
+    include_raw_content=True,
 )
+
 
 tools = [retriever_tool, search_tool]
 
@@ -52,7 +55,12 @@ llm_with_tools = llm.bind_tools(tools)
 
 # System message
 sys_msg = SystemMessage(
-    content="You are a helpful assistant tasked with answering questions about travel in Vietnam. Returns content and metadata."
+    content="""
+    You are a helpful assistant tasked with answering questions about travel in Vietnam. 
+    Return your answer in markdown format. 
+    Return sources in a separate section (including page numbers for retriever tool). 
+    If information is not available in the retriever tool, try to find it in the tavily_search_results_json.
+    """
 )
 
 
@@ -71,6 +79,30 @@ builder.add_conditional_edges("reasoner", tools_condition)
 builder.add_edge("tools", "reasoner")
 
 app = builder.compile()
+
+
+def run_llm(prompt: str, chat_history: list):
+    # Convert chat history to BaseMessage objects
+    messages = [
+        (
+            HumanMessage(content=msg["content"])
+            if msg["role"] == "user"
+            else SystemMessage(content=msg["content"]) if msg["role"] == "system" else AIMessage(content=msg["content"])
+        )
+        for msg in chat_history
+    ]
+
+    # Add the new prompt as a HumanMessage
+    messages.append(HumanMessage(content=prompt))
+
+    # Invoke the app with the messages
+    result = app.invoke({"messages": messages})
+
+    # Extract the last message from the result
+    last_message = result["messages"][-1]
+
+    return {"output": last_message.content, "intermediate_steps": result.get("intermediate_steps", [])}
+
 
 if __name__ == "__main__":
     question = "What are the best things to do Hanoi and are there any events happening at the moment?"

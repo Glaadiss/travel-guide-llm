@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.prompts import PromptTemplate
 from langchain.tools import Tool
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools import TavilySearchResults
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 
@@ -27,16 +27,17 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
     # Create custom retriever tool
     retriever_tool = Tool(
-        name=INDEX_NAME,
+        name="retriever tool",
         func=retrieve_with_metadata,
         description="Useful for answering questions about travel in Vietnam. Returns content and metadata.",
     )
 
-    # Create search tool
-    search_tool = Tool(
-        name="Search",
-        func=DuckDuckGoSearchRun().run,
-        description="Useful for searching the internet for current information.",
+    search_tool = TavilySearchResults(
+        name="search tool",
+        max_results=5,
+        search_depth="advanced",
+        include_answer=True,
+        include_raw_content=True,
     )
 
     # Create list of tools
